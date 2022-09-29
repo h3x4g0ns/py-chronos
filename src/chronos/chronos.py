@@ -1,5 +1,6 @@
 import numpy as np
 from math import log
+import types
 
 # lookup table for the trajectories and their derivatives
 FXS = {
@@ -17,7 +18,9 @@ def taylor_expansion(x0, y, f1, f2):
   return lambda x: y + f1(x0)*(x-x0) + f2(x0)*(x-x0)**2/2
 
 # main timer function 
-def timer()
+def timer(func: types.FunctionType, mode: str, inp) -> str:
+  pass
+
 
 # empty function for testing functionality
 def test():
