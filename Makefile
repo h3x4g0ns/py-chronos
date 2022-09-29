@@ -5,8 +5,11 @@ clean:
 	rm -rf dist
 	rm -rf *.egg-info
 
-install: clean
+install:
 	pip install -e .
+
+test: install
+	pytest
 
 build: install
 	python -m build

@@ -30,9 +30,9 @@ def timer(func: types.FunctionType) -> str:
 
   for i in x:
     # record new measure for runtime
-    start = time.timer()
+    start = time.time()
     func(i)
-    elapsed = time.timer() - start
+    elapsed = time.time() - start
     y.append(elapsed)
 
     # no need to calculate loss for the first iteration
@@ -45,7 +45,7 @@ def timer(func: types.FunctionType) -> str:
         yhat = f(i)
         # calculate loss for the current iteration
         # and add it to runing sum
-        loss[k].append(abs(y - yhat) + loss[k][i-1])
+        loss[k].append(abs(y[-1] - yhat) + loss[k][-1])
 
       # caculate argmin for the current iteration
       arg_min.append(min(loss.keys(), key=lambda x: loss[x][-1]))
