@@ -19,6 +19,7 @@ EARLY_STOP = 5
 def taylor_expansion(x0, y, f1, f2):
   return lambda x: y + f1(x0)*(x-x0) + f2(x0)*(x-x0)**2/2
 
+
 # main timer function 
 def timer(func: types.FunctionType, inp) -> str:
   # init variables for storage
@@ -35,7 +36,7 @@ def timer(func: types.FunctionType, inp) -> str:
     y.append(elapsed)
 
     # no need to calculate loss for the first iteration
-    if i == 0:
+    if i == 1:
       continue
     else:
       for k, v in FXS.items():
@@ -47,8 +48,7 @@ def timer(func: types.FunctionType, inp) -> str:
         loss[k].append(abs(y - yhat) + loss[k][i-1])
 
       # caculate argmin for the current iteration
-      arg_min.append(min(loss, key=lambda x: loss[x][-1]))
-
+      arg_min.append(min(loss.keys(), key=lambda x: loss[x][-1]))
 
     # no need to stop early if less than EARLY_STOP iterations
     if len(arg_min) < EARLY_STOP:
@@ -60,7 +60,6 @@ def timer(func: types.FunctionType, inp) -> str:
 
   # if we get here, we have to return the argmin of the last iteration
   return arg_min[-1]
-
 
 
 # empty function for testing functionality
