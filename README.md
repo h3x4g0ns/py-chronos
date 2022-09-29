@@ -18,7 +18,7 @@ Where $g(x)$ is defined to be the measured runtime at timestep $x$.
 
 We linearly scale the input to the test function and record its runtime. This new update is incorporated at the next time step to get a better approximation of the trajectory. Our optimization problem is defined to be as follows.
 
-$$ \underset{f \in F}{\arg\min} \sum_i^{i=n}|T_n^f(i)-g(i)|$$
+$$ \underset{f \in F}{\arg\min} \sum_1^{i=n}|T_n^f(i-i)(i)-g(i)|$$
 
 Where $F$ is defined to be the set of all known trajectories to us, and $n$ is the number of data points we have.
 
