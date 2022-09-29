@@ -21,7 +21,7 @@ def taylor_expansion(x0, y, f1, f2):
 
 
 # main timer function 
-def timer(func: types.FunctionType, inp) -> str:
+def timer(func: types.FunctionType) -> str:
   # init variables for storage
   x = list(range(1, 50))
   y = []
