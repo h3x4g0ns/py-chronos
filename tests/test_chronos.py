@@ -29,5 +29,5 @@ def fib_fast(n):
 def test_fib_linear():
     assert chronos.timer(fib_linear) == "$x$"
 
-# def test_fib_vanilla():
-#     assert chronos.timer(fib_vanilla) == "$2^x$"
+def test_fib_vanilla():
+    assert chronos.timer(fib_vanilla) == "$2^x$"

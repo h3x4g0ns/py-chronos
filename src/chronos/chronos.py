@@ -41,6 +41,7 @@ def timer(func: types.FunctionType) -> str:
     else:
       for k, v in FXS.items():
         raise NotImplementedError
+        loss[k].append(abs(y[i] - yhat) + loss[k][-1])
 
       # caculate argmin for the current iteration
       arg_min.append(min(loss.keys(), key=lambda x: loss[x][-1]))
