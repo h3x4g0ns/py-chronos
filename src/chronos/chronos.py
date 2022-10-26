@@ -12,7 +12,7 @@ FXS = {
 }
 
 # num of iterations before we can potentially stop early
-EARLY_STOP = 5
+EARLY_STOP = 20
 
 
 # return 2nd degree taylor expansion of f(x) at x0
@@ -24,7 +24,7 @@ def taylor_expansion(x0, y, f1, f2):
 def timer(func: types.FunctionType) -> str:
   # init variables for storage
   x = list(range(1, 50))
-  y = []
+  y = [0]
   loss = {k: [0] for k in FXS.keys()}
   arg_min = []
 
@@ -32,6 +32,7 @@ def timer(func: types.FunctionType) -> str:
     # record new measure for runtime
     start = time.time()
     func(i)
+    time.sleep(0.1)
     elapsed = time.time() - start
     y.append(elapsed)
 
@@ -41,11 +42,14 @@ def timer(func: types.FunctionType) -> str:
     else:
       for k, v in FXS.items():
         # calculate taylor expansion at given point
-        f = taylor_expansion(i, y[i-1], v[1], v[2])
+        f = taylor_expansion(i-1, y[i-1], v[1], v[2])
         yhat = f(i)
         # calculate loss for the current iteration
-        # and add it to runing sum
-        loss[k].append(abs(y[-1] - yhat) + loss[k][-1])
+        # and add it to running sum
+        # print(f"k = {k}, yhat = {yhat}, y = {y[-1]}")
+        print(y)
+        print(f"i = {i}, y = {y[i]}")
+        loss[k].append(abs(y[i] - yhat) + loss[k][-1])
 
       # caculate argmin for the current iteration
       arg_min.append(min(loss.keys(), key=lambda x: loss[x][-1]))
