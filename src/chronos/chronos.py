@@ -32,7 +32,6 @@ def timer(func: types.FunctionType) -> str:
     # record new measure for runtime
     start = time.time()
     func(i)
-    time.sleep(0.1)
     elapsed = time.time() - start
     y.append(elapsed)
 
