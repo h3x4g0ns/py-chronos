@@ -1,9 +1,9 @@
 import chronos
 
-def fib_vannila(n):
+def fib_vanilla(n):
     if n <= 1:
         return n
-    return fib_vannila(n-1) + fib_vannila(n-2)
+    return fib_vanilla(n-1) + fib_vanilla(n-2)
 
 def fib_dp(n):
     fib = [0, 1]
@@ -26,5 +26,8 @@ def fib_fast(n):
   return lookup[n]
 
 
-def test_fib_vannila():
-    assert chronos.timer(fib_vannila) == "$x^2$"
+def test_fib_linear():
+    assert chronos.timer(fib_linear) == "$x$"
+
+# def test_fib_vanilla():
+#     assert chronos.timer(fib_vanilla) == "$2^x$"
