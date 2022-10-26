@@ -18,8 +18,6 @@ EARLY_STOP = 20
 # return 2nd degree taylor expansion of f(x) at x0
 def taylor_expansion(x0, y, f1, f2):
   return lambda x: y + f1(x0)*(x-x0) + f2(x0)*(x-x0)**2/2
-
-
 # main timer function 
 def timer(func: types.FunctionType) -> str:
   # init variables for storage
@@ -41,7 +39,15 @@ def timer(func: types.FunctionType) -> str:
       continue
     else:
       for k, v in FXS.items():
-        raise NotImplementedError
+        # calculate taylor expansion at given point
+        f = taylor_expansion(i-1, y[i-1], v[1], v[2])
+        yhat = f(i)
+        # calculate loss for the current iteration
+        # and add it to running sum
+        # print(f"k = {k}, yhat = {yhat}, y = {y[-1]}")
+        print(y)
+        print(f"i = {i}, y = {y[i]}")
+        loss[k].append(abs(y[i] - yhat) + loss[k][-1])
 
       # caculate argmin for the current iteration
       arg_min.append(min(loss.keys(), key=lambda x: loss[x][-1]))
