@@ -6,6 +6,26 @@ Python utility tool that takes in a function and outputs symbolic $O$ runtime.
 
 ## How it works
 
+
+
+## Getting Started
+
+### Prerequisites
+
+You will need `numpy` in order to use py-chronos. These should install as dependencies by default.
+
+```sh
+pip install py-chronos numpy
+```
+
+## Usage
+
+## Features to Add
+
+Right now, the model is only able to support offline aysmptotic analysis. The goals is to perform online analysis so that we can utilize an `EARLY_STOP` if the last `k` predictions have been the same.
+
+### Prior Attempts
+
 In order to approximate asymptotic behavior, we use the second degree Taylor Expansion in order to estimate the trajectory of the runtime given the point. We retain a lookup table for the different asymptoics runtimes that we can expect (This included precomputing first and second derivatives). Following trajectories and their derivative functions are known:
 
 $$ O(1), O(n), O(n^2), O(n^3), O(\log{n}), O(n\log{n}), O(2^n)$$
@@ -22,19 +42,9 @@ $$ \underset{f \in F}{\arg\min} \sum_1^{i=n}|T_n^f(i-i)(i)-g(i)|$$
 
 Where $F$ is defined to be the set of all known trajectories to us, and $n$ is the number of data points we have.
 
-## Getting Started
+> HOWEVER, the problem with this attempt is that if there are **large** or **small** coefficients present in our terms, they can artiically inflate or deflate the loss function. This leads to incorrect predictions with the asympotic analysis
 
-### Prerequisites
-
-You will need `numpy` in order to use py-chronos. These should install as dependencies by default.
-
-```sh
-pip install py-chronos numpy
-```
-
-## Usage
-
-## important links
+## Helpful Links
 
 - https://danielmuellerkomorowska.com/2020/06/02/smoothing-data-by-rolling-average-with-numpy/
 - https://pythonnumericalmethods.berkeley.edu/notebooks/chapter16.05-Least-Square-Regression-for-Nonlinear-Functions.html
