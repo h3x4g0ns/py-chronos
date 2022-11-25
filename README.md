@@ -6,7 +6,7 @@ Python utility tool that takes in a function and outputs symbolic $O$ runtime.
 
 ## How it works
 
-
+We basically take a couple known trajectories (specifically $O(1), O(n), O(n^2), O(n^3), O(\log{n}), O(n\log{n}), O(2^n)$ and we compute a least squares regression for each trajectory. We use a loss function to aggregate the differences and then return the trajectory with the smallest loss.
 
 ## Getting Started
 
