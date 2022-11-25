@@ -1,5 +1,8 @@
 # Chronos
 
+![pypi build](https://img.shields.io/github/workflow/status/h3x4g0ns/py-chronos/pypi-build)
+[![PyPI version](https://badge.fury.io/py/py-quantize-chronos.svg)](https://badge.fury.io/py/py-quantize-chronos)
+
 ## About this Project
 
 Python utility tool that takes in a function and outputs symbolic $O$ runtime.
