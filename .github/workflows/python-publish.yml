@@ -6,7 +6,12 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Upload Python Package
+name: pypi-build
+
+on:
+  push:
+    branches:
+      - main
 
 on:
   release:
