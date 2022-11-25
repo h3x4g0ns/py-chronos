@@ -1,61 +1,48 @@
 from math import log
+from tqdm import tqdm
+import numpy as np
 import types, time
 
 # lookup table for the trajectories and their derivatives
 FXS = {
-  "$x$": (lambda x: x, lambda x: 1, lambda x: 0),
-  "$x^2$": (lambda x: x**2, lambda x: 2*x, lambda x: 2),
-  "$x^3$": (lambda x: x**3, lambda x: 3*x**2, lambda x: 6*x),
-  "$log(x)$": (lambda x: log(x), lambda x: 1/x, lambda x: -1/x**2),
-  "$xlog(x)$": (lambda x: x*log(x), lambda x: log(x) + 1, lambda x: 1/x),
-  "$2^x$": (lambda x: 2**x, lambda x: log(2)*2**x, lambda x: log(2)**2*2**x)
+  "$1$": lambda x: 1,
+  "$x$": lambda x: x,
+  "$x^2$": lambda x: x**2,
+  "$x^3$": lambda x: x**3,
+  "$log(x)$": lambda x: np.log(x),
+  "$xlog(x)$": lambda x: x*np.log(x),
+  "$2^x$": lambda x: 2**x
 }
 
 # num of iterations before we can potentially stop early
 EARLY_STOP = 20
 
-
-# return 2nd degree taylor expansion of f(x) at x0
-def taylor_expansion(x0, y, f1, f2):
-  return lambda x: y + f1(x0)*(x-x0) + f2(x0)*(x-x0)**2/2
-
-
 # main timer function 
 def timer(func: types.FunctionType) -> str:
   # init variables for storage
   x = list(range(1, 50))
-  y = [0]
-  loss = {k: [0] for k in FXS.keys()}
-  arg_min = []
-
-  for i in x:
-    # record new measure for runtime
+  y = []
+  # time the function
+  for i in tqdm(x):
     start = time.time()
     func(i)
-    elapsed = time.time() - start
-    y.append(elapsed)
+    end = time.time()
+    y.append(end-start)
+  loss, coeffs = [], []
 
-    # no need to calculate loss for the first iteration
-    if i == 1:
-      continue
-    else:
-      for k, v in FXS.items():
-        raise NotImplementedError
-        loss[k].append(abs(y[i] - yhat) + loss[k][-1])
+  # run regression for every trajectory
+  for func in FXS.values():
+    # find best fit via least squares
+    coeff = np.linalg.lstsq(np.array([func(i) for i in x]).reshape(-1, 1), y, rcond=None)[0]
+    coeffs.append(coeff)
+    # find total loss
+    loss = np.sum(np.abs(y - coeff*func(x)))
+    loss.append(loss)
 
-      # caculate argmin for the current iteration
-      arg_min.append(min(loss.keys(), key=lambda x: loss[x][-1]))
-
-    # no need to stop early if less than EARLY_STOP iterations
-    if len(arg_min) < EARLY_STOP:
-      continue
-    else:
-      # check if the last EARLY_STOP iterations have the same argmin
-      if all([arg_min[-1] == arg_min[-i] for i in range(1, EARLY_STOP)]):
-        return arg_min[-1]
-
-  # if we get here, we have to return the argmin of the last iteration
-  return arg_min[-1]
+  # find the best fit
+  best = np.argmin(loss)
+  # return name of best fit and its coefficient
+  return best, coeffs[best]
 
 
 # empty function for testing functionality
