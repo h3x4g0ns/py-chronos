@@ -18,12 +18,16 @@ FXS = {
 EARLY_STOP = 20
 
 # main timer function 
-def timer(func: types.FunctionType) -> str:
+def timer(func: types.FunctionType, silent: bool=False, num: int=50):
   # init variables for storage
-  x = list(range(1, 50))
+  x = np.arange(1, num+1)
   y = []
   # time the function
-  for i in tqdm(x):
+  if not silent:
+    header = tqdm
+  else:
+    header = lambda x: x
+  for i in header(x):
     start = time.time()
     func(i)
     end = time.time()
@@ -36,13 +40,13 @@ def timer(func: types.FunctionType) -> str:
     coeff = np.linalg.lstsq(np.array([func(i) for i in x]).reshape(-1, 1), y, rcond=None)[0]
     coeffs.append(coeff)
     # find total loss
-    loss = np.sum(np.abs(y - coeff*func(x)))
-    loss.append(loss)
+    cost = np.sum(np.abs(y - coeff*func(x)))
+    loss.append(cost)
 
   # find the best fit
   best = np.argmin(loss)
   # return name of best fit and its coefficient
-  return best, coeffs[best]
+  return list(FXS.keys())[best], coeffs[best]
 
 
 # empty function for testing functionality
