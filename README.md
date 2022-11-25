@@ -6,7 +6,7 @@ Python utility tool that takes in a function and outputs symbolic $O$ runtime.
 
 ## How it works
 
-We basically take a couple known trajectories (specifically $O(1), O(n), O(n^2), O(n^3), O(\log{n}), O(n\log{n}), O(2^n)$ and we compute a least squares regression for each trajectory. We use a loss function to aggregate the differences and then return the trajectory with the smallest loss.
+We basically take a couple known trajectories (specifically $O(1)$, $O(n)$, $O(n^2)$, $O(n^3)$, $O(\log{n})$, $O(n\log{n})$, $O(2^n)$ and we compute a least squares regression for each trajectory. We use a loss function to aggregate the differences and then return the trajectory with the smallest loss.
 
 ## Getting Started
 
@@ -20,13 +20,26 @@ pip install py-quantize-chronos
 
 ## Usage
 
+You need to pass in the name of the function you want timed into `timer`. The `timer` func will return the name of the function that models the runtime trajectory as a string. It also returns the coefficient that was outputted the least squares regression.
 
+```py
+import chronos
+
+def fib_exp(n):
+  if n <= 1:
+    return n
+  return fib_exp(n-1) + fib_exp(n-2)
+
+print("running expoential runtime function")
+func, coeff = chronos.timer(fib_exp, silent=True, num=100)
+print(func, coeff, "\n")
+```
 
 ## Features to Add
 
 Right now, the model is only able to support offline aysmptotic analysis. The goals is to perform online analysis so that we can utilize an `EARLY_STOP` if the last `k` predictions have been the same.
 
-### Prior Attempts
+## Prior Attempts
 
 In order to approximate asymptotic behavior, we use the second degree Taylor Expansion in order to estimate the trajectory of the runtime given the point. We retain a lookup table for the different asymptoics runtimes that we can expect (This included precomputing first and second derivatives). Following trajectories and their derivative functions are known:
 
