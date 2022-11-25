@@ -42,6 +42,8 @@ print(func, coeff, "\n")
 
 Right now, the model is only able to support offline aysmptotic analysis. The goals is to perform online analysis so that we can utilize an `EARLY_STOP` if the last `k` predictions have been the same.
 
+Furthermore, we need some more robust unit testing...
+
 ## Prior Attempts
 
 In order to approximate asymptotic behavior, we use the second degree Taylor Expansion in order to estimate the trajectory of the runtime given the point. We retain a lookup table for the different asymptoics runtimes that we can expect (This included precomputing first and second derivatives). Following trajectories and their derivative functions are known:
