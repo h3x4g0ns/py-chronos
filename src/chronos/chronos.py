@@ -1,4 +1,3 @@
-from math import log
 from tqdm import tqdm
 import numpy as np
 import types, time
