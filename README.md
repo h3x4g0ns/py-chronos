@@ -1,4 +1,4 @@
-# py-chronos
+# Chronos
 
 ## About this Project
 
@@ -12,13 +12,15 @@ We basically take a couple known trajectories (specifically $O(1), O(n), O(n^2),
 
 ### Prerequisites
 
-You will need `numpy` in order to use py-chronos. These should install as dependencies by default.
+You will need `numpy` and `tqdm` in order to use `chronos`. These should install as dependencies by default.
 
 ```sh
-pip install py-chronos numpy
+pip install py-quantize-chronos
 ```
 
 ## Usage
+
+
 
 ## Features to Add
 
