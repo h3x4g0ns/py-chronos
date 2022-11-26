@@ -1,5 +1,6 @@
 # Chronos
 
+
 ![pypi build](https://img.shields.io/github/workflow/status/h3x4g0ns/py-chronos/pypi-build)
 [![PyPI version](https://badge.fury.io/py/py-quantize-chronos.svg)](https://badge.fury.io/py/py-quantize-chronos)
 
@@ -38,9 +39,30 @@ func, coeff = chronos.timer(fib_exp, silent=True, num=100)
 print(func, coeff, "\n")
 ```
 
+In order for the analyis to work, the function's runtime must scale with respect to the input (ie. fibonacci sequence). Hence, the function must take an integer value. If the function doesn't support this, you must wrap the function in such a manner that the input's length can me modified with an integer.
+
+```py
+# original function
+def counter(string: str):
+  counter = 0
+  for i in len(string):
+    if i == "0":
+      counter += 1
+    return counter
+
+# modified function to time
+def wrapper(n: int):
+  # generate random string with variable size
+  letters = string.ascii_lowercase + string.digits
+  inp = "".join(random.choices(letters, k=n))
+  return counter(inp)
+```
+
 ## Features to Add
 
 Right now, the model is only able to support offline aysmptotic analysis. The goals is to perform online analysis so that we can utilize an `EARLY_STOP` if the last `k` predictions have been the same.
+
+We would also like to support function that doesn't necesarily have integer inputs.
 
 Furthermore, we need some more robust unit testing...
 
