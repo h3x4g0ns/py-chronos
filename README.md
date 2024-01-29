@@ -1,7 +1,7 @@
 # Chronos
 
 
-![pypi build](https://img.shields.io/github/workflow/status/h3x4g0ns/py-chronos/pypi-build)
+![Build Status](https://img.shields.io/github/actions/workflow/status/h3x4g0ns/py-chronos/python-publish.yml)
 [![PyPI version](https://badge.fury.io/py/py-quantize-chronos.svg)](https://badge.fury.io/py/py-quantize-chronos)
 
 ## About this Project
